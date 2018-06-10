@@ -1,4 +1,4 @@
-import { CredentialsDTO } from './../../models/credentials.dto';
+import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
   
   ngOnInit() 
   {
@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
 
   login()
   {
-    console.log(this.formGroup.value);
-    
+    this.authService.login(this.formGroup.value)
+      .subscribe(login => {
+        console.log(login);
+      }, error =>{
+        console.log(error);
+      })
   }
 }
