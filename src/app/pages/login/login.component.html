@@ -1,13 +1,15 @@
 <div class="jumbotron">
-  <form>
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
       <div class="form-group">
         <label for="exampleInputEmail1">E-mail</label>
-        <input type="email" [(ngModel)]="creds.email" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira seu e-mail">
+        <input type="email" formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Insira seu e-mail">
       </div>
+      <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors" margin-left>E-mail inválido</p>
       <div class="form-group">
-        <label for="exampleInputPassword1">Senha</label>
-        <input type="password" [(ngModel)]="creds.password" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputPassword1" placeholder="Insira sua senha">
+        <label for="password">Senha</label>
+        <input type="password" formControlName="password" class="form-control" id="password" placeholder="Insira sua senha">
       </div>
-      <button type="submit" (click)="login()" class="btn btn-primary">Enviar</button>
+      <p class="danger" *ngIf="formGroup.controls.password.dirty && formGroup.controls.password.errors" margin-left>Informe a senha</p>
+      <button type="submit" class="btn btn-primary">Enviar</button>
   </form>
 </div>

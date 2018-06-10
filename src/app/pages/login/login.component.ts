@@ -1,5 +1,6 @@
 import { CredentialsDTO } from './../../models/credentials.dto';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,16 @@ export class LoginComponent implements OnInit {
     email: "",
     password: ""
   };
+  formGroup: FormGroup;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
   
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.formGroup = this.formBuilder.group({
+      email: [null,[Validators.required, Validators.email]],
+      password: [null,[Validators.required]]
+    });
   }
 
   login()
