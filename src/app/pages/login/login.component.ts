@@ -9,10 +9,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  creds: CredentialsDTO = {
-    email: "",
-    password: ""
-  };
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
@@ -27,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   login()
   {
-    console.log(this.creds);
+    console.log(this.formGroup.value);
     
   }
 }

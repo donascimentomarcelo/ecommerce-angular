@@ -10,6 +10,6 @@
         <input type="password" formControlName="password" class="form-control" id="password" placeholder="Insira sua senha">
       </div>
       <p class="danger" *ngIf="formGroup.controls.password.dirty && formGroup.controls.password.errors" margin-left>Informe a senha</p>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Enviar</button>
   </form>
 </div>
