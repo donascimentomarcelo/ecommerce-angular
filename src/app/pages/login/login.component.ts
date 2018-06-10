@@ -1,3 +1,4 @@
+import { CredentialsDTO } from './../../models/credentials.dto';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  creds: CredentialsDTO = {
+    email: "",
+    password: ""
+  };
 
+  constructor() { }
+  
   ngOnInit() {
   }
 
+  login()
+  {
+    console.log(this.creds);
+    
+  }
 }
