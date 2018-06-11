@@ -1,4 +1,4 @@
-import { AuthService } from './../../../services/auth.service';
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
   login()
   {
     this.authService.login(this.formGroup.value)
-      .subscribe(login => {
-        console.log(login);
+      .subscribe(response => {
+        this.authService.successfulLogin(response);
       }, error =>{
         console.log(error);
       })
