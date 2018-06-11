@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.formGroup.value)
       .subscribe(response => {
         this.authService.successfulLogin(response);
-      }, error =>{
-        console.log(error);
-      })
-  }
+      }, error =>{ });
+  };
 }

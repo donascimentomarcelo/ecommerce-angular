@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
+import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StorageService } from './services/storage.service';
   ],
   providers: [
     AuthService,
-    StorageService
+    StorageService,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
