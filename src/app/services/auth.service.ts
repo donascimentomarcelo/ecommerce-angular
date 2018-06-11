@@ -23,6 +23,10 @@ export class AuthService {
   successfulLogin(authorizationValue: any)
   {
     let user: LocalUser = {
+      id:    authorizationValue.user.id ,
+      name:  authorizationValue.user.name ,
+      email: authorizationValue.user.email ,
+      role:  authorizationValue.user.role ,
       token: authorizationValue.token
     };
 
