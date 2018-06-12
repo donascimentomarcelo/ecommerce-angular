@@ -13,12 +13,14 @@ import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryComponent } from './pages/category/category/category.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
