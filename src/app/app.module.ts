@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryComponent } from './pages/category/category/category.component';
+import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CategoryComponent } from './pages/category/category/category.component'
   providers: [
     AuthService,
     StorageService,
+    AuthInterceptorProvider,
     ErrorInterceptorProvider,
   ],
   bootstrap: [AppComponent]
