@@ -1,6 +1,6 @@
 <div class="wrapper">
     <!-- Sidebar Holder -->
-    <nav id="sidebar" [ngClass]="{'active': opened === true }">
+    <nav id="sidebar" [ngClass]="{'active': opened === true }" *ngIf="logged">
       <div class="sidebar-header">
         <h3>Menu</h3>
       </div>
@@ -30,7 +30,7 @@
 
     <!-- Page Content Holder -->
     <div id="content" [ngClass]="{'active': opened === true }">
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default" *ngIf="logged">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn" (click)="openMenu()">
