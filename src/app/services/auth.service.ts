@@ -5,6 +5,7 @@ import { CredentialsDTO } from '../models/credentials.dto';
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,10 @@ export class AuthService {
     };
 
     this.storage.setLocalUser(user);
+  };
+
+  logout()
+  {
+    return this.http.post(`${environment.api_url}/auth/logout`, {});
   };
 }

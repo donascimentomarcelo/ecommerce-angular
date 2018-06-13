@@ -29,8 +29,6 @@ export class RefreshToken implements HttpInterceptor {
                     return this.http.post<any>(`${environment.api_url}/auth/refresh`, {})
                         .pipe(
                         flatMap(data => {
-                            console.log(data);
-                            
                             let localUser: LocalUser = this.storage.getLocalUser();
                             localUser.token = data.token;
                             this.storage.setLocalUser(localUser);
