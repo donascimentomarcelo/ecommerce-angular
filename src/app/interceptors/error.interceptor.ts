@@ -22,9 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor{
                     errorObj = errorObj.error;
                 };
 
-                console.log('Erro detectado');
-                console.log(errorObj);
-
                 switch(errorObj.status)
                 {
                     case 401:
