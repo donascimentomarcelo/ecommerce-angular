@@ -12,6 +12,7 @@ export class AppComponent {
   
   opened: boolean = true;
   logged: boolean = false;
+  name: string;
   
   constructor(
     private storageService: StorageService,
@@ -24,6 +25,8 @@ export class AppComponent {
     {
       this.logged = true;
     };
+
+    this.name = storageService.getLocalUser().name;
   };
   
   openMenu()
