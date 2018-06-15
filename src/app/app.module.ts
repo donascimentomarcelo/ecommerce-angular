@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryComponent } from './pages/category/category/category.component';
 import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
 import { RefreshTokenProvider } from './interceptors/refreshToken.interceptor';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RefreshTokenProvider } from './interceptors/refreshToken.interceptor';
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [
     AuthService,

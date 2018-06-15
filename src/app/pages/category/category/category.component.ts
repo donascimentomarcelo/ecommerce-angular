@@ -10,16 +10,22 @@ import { CategoryService } from '../../../services/domain/category.service';
 export class CategoryComponent implements OnInit {
 
   categories: CategoryDTO[] = [];
-  page : number = 0;
+  page: number;
+  total: number;
 
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() 
   {
-    this.categoryService.list(this.page, 5)
+    this.list(0);
+  };
+  
+  list(page: number)
+  {
+    this.categoryService.list(page)
       .subscribe(response => {
-        this.categories = response.data;       
-        console.log(this.categories); 
+        this.categories = response.data;
+        this.total = response.total; 
       }, error => {});
   };
 

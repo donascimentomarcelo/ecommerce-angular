@@ -9,12 +9,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let category of categories">
+          <tr *ngFor="let category of categories | paginate: { 
+                                                               itemsPerPage: 5, 
+                                                               currentPage: page,
+                                                               totalItems: total }">
             <th scope="row">{{ category.id }}</th>
             <td>{{ category.name }}</td>
           </tr>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="page = $event"
+                           (pageChange)="list($event)"
+                            directionLinks="true"
+                            previousLabel="Primeiro"
+                            nextLabel="Último"
+                            autoHide="true"></pagination-controls>
     </div>
     <div class="col">
       <form>

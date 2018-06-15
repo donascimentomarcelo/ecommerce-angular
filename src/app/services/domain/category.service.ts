@@ -11,8 +11,8 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  list(page: number, per_page: number = 5): Observable<CategoryDTO[]>
+  list(page: number): Observable<CategoryDTO[]>
   {
-    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category?page=${page}&per_page=${per_page}`);
+    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category?page=${page}`);
   }
 }
