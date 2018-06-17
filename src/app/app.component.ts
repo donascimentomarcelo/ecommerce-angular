@@ -24,9 +24,9 @@ export class AppComponent {
     if(localUser)
     {
       this.logged = true;
+      this.name = storageService.getLocalUser().name;
     };
 
-    this.name = storageService.getLocalUser().name;
   };
   
   openMenu()

@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
         this.authService.successfulLogin(response);
         this.router.navigate(['home']);
         this.appComponent.logged = true;
+        this.appComponent.name = this.storageService.getLocalUser().name;
       }, error =>{ });
   };
 }

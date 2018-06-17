@@ -14,5 +14,10 @@ export class CategoryService {
   list(page: number): Observable<CategoryDTO[]>
   {
     return this.http.get<CategoryDTO[]>(`${environment.api_url}/category?page=${page}`);
-  }
+  };
+
+  create(category)
+  {
+    return this.http.post(`${environment.api_url}/category`, category);
+  };
 }
