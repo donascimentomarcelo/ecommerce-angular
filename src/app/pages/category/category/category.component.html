@@ -12,6 +12,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
+            <th scope="col">Editar</th>
           </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
                                                                totalItems: total }">
             <th scope="row">{{ category.id }}</th>
             <td>{{ category.name }}</td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="edit(category)">Editar</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -37,7 +41,7 @@
             <input type="hidden" class="form-control" formControlName="id">
         </div>
         <div class="form-group">
-          <label for="categoryInput">Categoria</label>
+          <label for="categoryInput">Categoria {{ idSelected }}</label>
           <input type="text" class="form-control" formControlName="name" id="categoryInput" placeholder="Informe a categoria">
         </div>
         <div class="form-group">

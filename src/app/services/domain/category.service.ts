@@ -20,4 +20,9 @@ export class CategoryService {
   {
     return this.http.post(`${environment.api_url}/category`, category);
   };
+
+  update(category, id)
+  {
+    return this.http.put(`${environment.api_url}/category/${id}`, category);
+  }
 }

@@ -14,6 +14,7 @@ export class CategoryComponent implements OnInit {
   page: number;
   total: number;
   formGroup: FormGroup;
+  idSelected: number = null;
 
   constructor(
     private categoryService: CategoryService,
@@ -56,5 +57,23 @@ export class CategoryComponent implements OnInit {
       console.log(response);
     }, error => {});
   };
+
+  update(category, id)
+  {
+    this.categoryService.update(category, id)
+      .subscribe(response => {
+        console.log(response);
+      }, error => {});
+  };
+
+  edit(category)
+  {
+   this.idSelected = category.id;
+
+   this.formGroup = this.formBuilder.group({
+      id: [category.id],
+      name: [category.name]
+    });
+  }
 
 }
