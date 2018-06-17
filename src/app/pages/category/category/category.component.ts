@@ -62,8 +62,17 @@ export class CategoryComponent implements OnInit {
   {
     this.categoryService.update(category, id)
       .subscribe(response => {
-        console.log(response);
+        let updatedItem = this.categories.find(this.findIndexToUpdate, category.id);
+
+        let index = this.categories.indexOf(updatedItem);
+
+        this.categories[index] = category;
       }, error => {});
+  };
+
+  findIndexToUpdate(item)
+  {
+    return item.id === this;
   };
 
   edit(category)
