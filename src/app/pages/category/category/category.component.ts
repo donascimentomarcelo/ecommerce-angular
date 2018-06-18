@@ -15,6 +15,7 @@ export class CategoryComponent implements OnInit {
   total: number;
   formGroup: FormGroup;
   idSelected: number = null;
+  searchValue: string = '';
 
   constructor(
     private categoryService: CategoryService,
@@ -98,4 +99,17 @@ export class CategoryComponent implements OnInit {
     this.idSelected = null;
   };
 
+  search(event: any) 
+  {
+    if(event.target.value == '')
+    {
+      this.list(0);
+      return;
+    };
+    
+    this.categoryService.search(event.target.value)
+      .subscribe(response => {
+        this.categories = response;
+      }, error => {});
+  };
 }

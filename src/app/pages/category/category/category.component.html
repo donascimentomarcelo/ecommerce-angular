@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="form-group">
           <label for="categoryInput">Pesquisar</label>
-          <input type="text" class="form-control" id="categoryInput" placeholder="Pesquise pelo nome">
+          <input type="text" class="form-control" id="categoryInput" placeholder="Pesquise pelo nome" (keyup)="search($event)">
       </div>
     </div>
     <div class="col-6">
@@ -23,12 +23,13 @@
             <th scope="row">{{ category.id }}</th>
             <td>{{ category.name }}</td>
             <td>
-              <button type="button" class="btn btn-success" (click)="edit(category)">Editar</button>
+              <button type="button" class="btn btn-outline-success" (click)="edit(category)">Editar</button>
             </td>
           </tr>
         </tbody>
       </table>
-      <pagination-controls (pageChange)="page = $event"
+      <pagination-controls *ngIf="categories.length > 0"
+                           (pageChange)="page = $event"
                            (pageChange)="list($event)"
                             directionLinks="true"
                             previousLabel="Previous"
@@ -42,12 +43,14 @@
         </div>
         <div class="form-group">
           <label for="categoryInput">Categoria {{ idSelected }}</label>
-          <input type="text" class="form-control" formControlName="name" id="categoryInput" placeholder="Informe a categoria">
+          <input type="text" [ngClass]="{'is-invalid': formGroup.controls.name.dirty && formGroup.controls.name.errors }"  class="form-control" formControlName="name" id="categoryInput" placeholder="Informe a categoria">
         </div>
         <div class="form-group">
         <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Campo obrigatório</p>
-          <button type="button" class="btn btn-outline-success" [disabled]="formGroup.invalid" (click)="save()">Salvar</button>
-          <button type="button" class="btn btn-outline-danger" *ngIf="!formGroup.invalid" (click)="clear()">Limpar</button>
+          <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success" [disabled]="formGroup.invalid" (click)="save()">Salvar</button>
+              <button type="button" class="btn btn-danger"  [disabled]="formGroup.invalid" (click)="clear()">Limpar</button>
+          </div>
         </div>
       </form>
     </div>

@@ -24,5 +24,10 @@ export class CategoryService {
   update(category, id)
   {
     return this.http.put(`${environment.api_url}/category/${id}`, category);
-  }
+  };
+
+  search(category: string): Observable<CategoryDTO[]>
+  {
+    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category/findByName/${category}`);
+  };
 }
