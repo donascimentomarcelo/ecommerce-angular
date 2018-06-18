@@ -47,6 +47,7 @@
         <div class="form-group">
         <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Campo obrigatório</p>
           <button type="button" class="btn btn-outline-success" [disabled]="formGroup.invalid" (click)="save()">Salvar</button>
+          <button type="button" class="btn btn-outline-danger" *ngIf="!formGroup.invalid" (click)="clear()">Limpar</button>
         </div>
       </form>
     </div>

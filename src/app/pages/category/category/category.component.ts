@@ -54,7 +54,9 @@ export class CategoryComponent implements OnInit {
   {
     this.categoryService.create(category)
     .subscribe(response => {
-      console.log(response);
+      let cat: CategoryDTO = {id: response['id'], name: response['name']};
+      this.categories.push(cat);
+      this.clear();
     }, error => {});
   };
 
@@ -67,6 +69,8 @@ export class CategoryComponent implements OnInit {
         let index = this.categories.indexOf(updatedItem);
 
         this.categories[index] = category;
+
+        this.clear();
       }, error => {});
   };
 
@@ -81,8 +85,17 @@ export class CategoryComponent implements OnInit {
 
    this.formGroup = this.formBuilder.group({
       id: [category.id],
-      name: [category.name]
+      name: [category.name,[Validators.required]]
     });
-  }
+  };
+
+  clear()
+  {
+    this.formGroup.reset({
+      'id': '',
+      'name': ''
+    });
+    this.idSelected = null;
+  };
 
 }
