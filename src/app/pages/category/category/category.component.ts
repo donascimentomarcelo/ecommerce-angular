@@ -105,8 +105,9 @@ export class CategoryComponent implements OnInit {
 
   search(event: any) 
   {
-    if(event.target.value == '')
+    if(event.target.value == '' || event.target.value == undefined)
     {
+      this.searchValue = '';
       this.list(0);
       return;
     };
