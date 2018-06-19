@@ -1,9 +1,15 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <div class="form-group">
-          <label for="categoryInput">Pesquisar</label>
-          <input type="text" class="form-control" id="categoryInput" placeholder="Pesquise pelo nome" (keyup)="search($event)">
+      <div class="input-group">
+          <input type="text" class="form-control" placeholder="Pesquise pelo {{ searchPlaceholder }} da categoria" (keyup)="search($event)" aria-label="Text input with dropdown button">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtro</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" (click)="selectFindById()">Id</a>
+              <a class="dropdown-item" (click)="selectFindByName()">Name</a>
+            </div>
+          </div>
       </div>
     </div>
     <div class="col-6">

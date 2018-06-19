@@ -30,4 +30,9 @@ export class CategoryService {
   {
     return this.http.get<CategoryDTO[]>(`${environment.api_url}/category/findByName/${category}`);
   };
+
+  findOne(id: number): Observable<CategoryDTO[]>
+  {
+    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category/${id}`);
+  };  
 }

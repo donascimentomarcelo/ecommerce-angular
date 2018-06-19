@@ -16,6 +16,9 @@ export class CategoryComponent implements OnInit {
   formGroup: FormGroup;
   idSelected: number = null;
   searchValue: string = '';
+  findByName: boolean =  true;
+  findById: boolean =  false;
+  searchPlaceholder: string;
 
   constructor(
     private categoryService: CategoryService,
@@ -28,6 +31,7 @@ export class CategoryComponent implements OnInit {
       id: [null,],
       name: [null,[Validators.required]]
     });
+    this.searchPlaceholder = 'nome';
   };
   
   list(page: number)
@@ -106,10 +110,56 @@ export class CategoryComponent implements OnInit {
       this.list(0);
       return;
     };
-    
-    this.categoryService.search(event.target.value)
+
+    switch(this.findByName)
+    {
+      case true:
+      this.findByCategoryName(event.target.value);
+      break;
+
+      case false:
+      this.findByCategoryId(event.target.value);
+      break;
+    };
+  };
+
+  selectFindById()
+  {
+    this.findByName =  false;
+    this.findById = true;
+    this.searchPlaceholder = 'id';
+  };
+  
+  selectFindByName()
+  {
+    this.findById = false;
+    this.findByName =  true;
+    this.searchPlaceholder = 'nome';
+  };
+
+  findByCategoryName(name:string)
+  {
+    this.categoryService.search(name)
       .subscribe(response => {
         this.categories = response;
       }, error => {});
   };
+
+  findByCategoryId(id: number)
+  {
+    id = Number(id);
+    if(typeof id !== 'number')
+    {
+      console.log('nao e numero')
+      return;
+    };
+
+    this.categoryService.findOne(id)
+      .subscribe(response => {
+        let value: any = [];
+        value.push(response);
+        this.categories = value;
+      }, error => {});
+  };
+
 }
