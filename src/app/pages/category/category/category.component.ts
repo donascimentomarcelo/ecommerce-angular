@@ -1,3 +1,4 @@
+import { TypeService } from './../../../services/domain/type.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryDTO } from './../../../models/category.dto';
 import { Component, OnInit } from '@angular/core';
@@ -22,7 +23,8 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private typeService: TypeService) { }
 
   ngOnInit() 
   {
@@ -32,6 +34,7 @@ export class CategoryComponent implements OnInit {
       name: [null,[Validators.required]]
     });
     this.searchPlaceholder = 'nome';
+    this.listType();
   };
   
   list(page: number)
@@ -160,6 +163,14 @@ export class CategoryComponent implements OnInit {
         let value: any = [];
         value.push(response);
         this.categories = value;
+      }, error => {});
+  };
+
+  listType()
+  {
+    this.typeService.list()
+      .subscribe(response => {
+        console.log(response['data']);
       }, error => {});
   };
 
