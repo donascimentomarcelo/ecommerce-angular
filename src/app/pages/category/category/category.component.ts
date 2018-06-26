@@ -1,7 +1,8 @@
+import { TypeDTO } from './../../../models/type.dto';
 import { TypeService } from './../../../services/domain/type.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { CategoryDTO } from './../../../models/category.dto';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { CategoryService } from '../../../services/domain/category.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { CategoryService } from '../../../services/domain/category.service';
 export class CategoryComponent implements OnInit {
 
   categories: CategoryDTO[] = [];
+  types: TypeDTO[];
   page: number;
   total: number;
   formGroup: FormGroup;
@@ -31,10 +33,26 @@ export class CategoryComponent implements OnInit {
     this.list(0);
     this.formGroup = this.formBuilder.group({
       id: [null,],
-      name: [null,[Validators.required]]
+      name: [null,[Validators.required]],
+      type: this.formBuilder.array([])
     });
     this.searchPlaceholder = 'nome';
     this.listType();
+  };
+
+  onCheckChange(id, isChecked, key) 
+  {
+    const chkArray = < FormArray > this.formGroup.get(key);
+    
+    if(isChecked) 
+    {
+      chkArray.push(new FormControl(id));
+    } 
+    else 
+    {
+      let idx = chkArray.controls.findIndex(x => x.value == id);
+      chkArray.removeAt(idx);
+    };
   };
   
   list(page: number)
@@ -48,6 +66,8 @@ export class CategoryComponent implements OnInit {
 
   save()
   {
+    console.log(this.formGroup.value)
+    /*
     if(this.formGroup.value.id)
     {
       this.update(this.formGroup.value, this.formGroup.value.id);
@@ -55,7 +75,7 @@ export class CategoryComponent implements OnInit {
     else
     {
       this.create(this.formGroup.value);
-    }
+    }*/
   };
 
   create(category)
@@ -170,7 +190,7 @@ export class CategoryComponent implements OnInit {
   {
     this.typeService.list()
       .subscribe(response => {
-        console.log(response['data']);
+        this.types = response['data'];
       }, error => {});
   };
 
