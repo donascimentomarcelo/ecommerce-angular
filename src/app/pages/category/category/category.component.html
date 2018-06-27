@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col"  *ngFor="let type of types; index as i">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" id="type.name" type="checkbox" (change)="onCheckChange(type.id, $event.target.checked, 'type')">
+                <input class="form-check-input" id="type.name" type="checkbox" (change)="onCheckChange(type.id, $event.target.checked, 'types')">
                 <label class="form-check-label" for="type.name">{{ type.name }}</label>
               </div>
             </div>

@@ -34,7 +34,7 @@ export class CategoryComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       id: [null,],
       name: [null,[Validators.required]],
-      type: this.formBuilder.array([])
+      types: this.formBuilder.array([])
     });
     this.searchPlaceholder = 'nome';
     this.listType();
@@ -66,8 +66,7 @@ export class CategoryComponent implements OnInit {
 
   save()
   {
-    console.log(this.formGroup.value)
-    /*
+
     if(this.formGroup.value.id)
     {
       this.update(this.formGroup.value, this.formGroup.value.id);
@@ -75,7 +74,7 @@ export class CategoryComponent implements OnInit {
     else
     {
       this.create(this.formGroup.value);
-    }*/
+    }
   };
 
   create(category)
