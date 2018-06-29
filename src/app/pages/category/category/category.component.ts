@@ -31,19 +31,29 @@ export class CategoryComponent implements OnInit {
   ngOnInit() 
   {
     this.list(0);
+    this.initForm();
+    this.searchPlaceholder = 'nome';
+    this.listType();
+  };
+
+  initForm()
+  {
     this.formGroup = this.formBuilder.group({
       id: [null,],
       name: [null,[Validators.required]],
       types: new FormArray([])
     });
-    this.searchPlaceholder = 'nome';
-    this.listType();
-  };
+  }
 
   onCheckChange(id, isChecked, key) 
   {
     const chkArray = < FormArray > this.formGroup.get(key);
-    
+    // if(chkArray == null)
+    // {
+    //   this.initForm();
+    // }
+    // console.log(chkArray)
+
     if(isChecked) 
     {
       chkArray.push(new FormControl(id));
@@ -130,13 +140,18 @@ export class CategoryComponent implements OnInit {
 
   edit(category)
   {
+   this.clear();
    this.idSelected = category.id;
 
    this.formGroup = this.formBuilder.group({
       id: [category.id],
       name: [category.name,[Validators.required]],
-      types: this.formBuilder.array([ category.types.id ])
+      types: new FormArray([])
     });
+    for(let i=0; i<category.types.length; i++)
+    {
+        this.types[i].checked = true;
+    };
   };
 
   clear()
@@ -144,10 +159,14 @@ export class CategoryComponent implements OnInit {
     this.formGroup.reset({
       'id': '',
       'name': '',
+      types: new FormArray([])
     });
+
     this.idSelected = null;
     const arr = <FormArray> this.formGroup.get('types');
+
     arr.removeAt(0);
+    
     this.types.forEach((item) => {
       item.checked = false;
     });
