@@ -34,7 +34,7 @@ export class CategoryComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       id: [null,],
       name: [null,[Validators.required]],
-      types: this.formBuilder.array([])
+      types: new FormArray([])
     });
     this.searchPlaceholder = 'nome';
     this.listType();
@@ -47,11 +47,32 @@ export class CategoryComponent implements OnInit {
     if(isChecked) 
     {
       chkArray.push(new FormControl(id));
+
+      /**
+       * Faço a varredura de todos os tipos
+       * Pego o id do tipo na posição i e vejo se é igual ao id passado
+       * Se for igual eu atribuo true ao atributo checked na posição i
+       */
+      for(let i=0; i<this.types.length; i++)
+      {
+        if(this.types[i].id === id)
+        {
+          this.types[i].checked = true;
+        };
+      };
     } 
     else 
     {
       let idx = chkArray.controls.findIndex(x => x.value == id);
       chkArray.removeAt(idx);
+
+      for(let i=0; i<this.types.length; i++)
+      {
+        if(this.types[i].id === id)
+        {
+          this.types[i].checked = false;
+        };
+      };
     };
   };
   
@@ -66,7 +87,8 @@ export class CategoryComponent implements OnInit {
 
   save()
   {
-
+    console.log(this.formGroup.value)
+/*
     if(this.formGroup.value.id)
     {
       this.update(this.formGroup.value, this.formGroup.value.id);
@@ -74,7 +96,7 @@ export class CategoryComponent implements OnInit {
     else
     {
       this.create(this.formGroup.value);
-    }
+    }*/
   };
 
   create(category)
@@ -112,7 +134,8 @@ export class CategoryComponent implements OnInit {
 
    this.formGroup = this.formBuilder.group({
       id: [category.id],
-      name: [category.name,[Validators.required]]
+      name: [category.name,[Validators.required]],
+      types: this.formBuilder.array([ category.types.id ])
     });
   };
 
@@ -120,9 +143,14 @@ export class CategoryComponent implements OnInit {
   {
     this.formGroup.reset({
       'id': '',
-      'name': ''
+      'name': '',
     });
     this.idSelected = null;
+    const arr = <FormArray> this.formGroup.get('types');
+    arr.removeAt(0);
+    this.types.forEach((item) => {
+      item.checked = false;
+    });
   };
 
   search(event: any) 
