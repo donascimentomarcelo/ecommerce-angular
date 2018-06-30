@@ -47,22 +47,20 @@ export class CategoryComponent implements OnInit {
 
   onCheckChange(id, isChecked, key) 
   {
-    const chkArray = < FormArray > this.formGroup.get(key);
-    // if(chkArray == null)
-    // {
-    //   this.initForm();
-    // }
-    // console.log(chkArray)
+    const chkArray = <FormArray> this.formGroup.get(key);
+
+    for(let i=0; i<this.types.length;i++)
+    {
+      if(this.types[i].checked == true && !chkArray.value.includes(this.types[i].id))
+      {
+        chkArray.push(new FormControl(this.types[i].id));
+      }
+    }
 
     if(isChecked) 
     {
       chkArray.push(new FormControl(id));
 
-      /**
-       * Faço a varredura de todos os tipos
-       * Pego o id do tipo na posição i e vejo se é igual ao id passado
-       * Se for igual eu atribuo true ao atributo checked na posição i
-       */
       for(let i=0; i<this.types.length; i++)
       {
         if(this.types[i].id === id)
@@ -97,8 +95,6 @@ export class CategoryComponent implements OnInit {
 
   save()
   {
-    console.log(this.formGroup.value)
-/*
     if(this.formGroup.value.id)
     {
       this.update(this.formGroup.value, this.formGroup.value.id);
@@ -106,7 +102,7 @@ export class CategoryComponent implements OnInit {
     else
     {
       this.create(this.formGroup.value);
-    }*/
+    };
   };
 
   create(category)
@@ -123,11 +119,12 @@ export class CategoryComponent implements OnInit {
   {
     this.categoryService.update(category, id)
       .subscribe(response => {
+
         let updatedItem = this.categories.find(this.findIndexToUpdate, category.id);
 
         let index = this.categories.indexOf(updatedItem);
 
-        this.categories[index] = category;
+        this.categories[index] = response as CategoryDTO;
 
         this.clear();
       }, error => {});
@@ -150,7 +147,15 @@ export class CategoryComponent implements OnInit {
     });
     for(let i=0; i<category.types.length; i++)
     {
-        this.types[i].checked = true;
+      let x = this.types.find(function(item){
+        if(item.id == category.types[i].id)
+        {
+          item.checked = true;
+          return item as any;
+        };
+      });
+      const chkArray = <FormArray> this.formGroup.get('types');
+      chkArray.push(new FormControl(x.id));
     };
   };
 
