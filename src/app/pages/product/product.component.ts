@@ -49,7 +49,8 @@ export class ProductComponent implements OnInit {
     this.productService.list(page)
       .subscribe(response => {
         console.log(response)
-        this.products = response['data'];      
+        this.products = response['data'];   
+        this.total = response['total'];   
       }, error => {
 
       });
@@ -59,7 +60,7 @@ export class ProductComponent implements OnInit {
   {
     this.categoryService.list()
       .subscribe(response => {
-        console.log(response);
+        // console.log(response);
       }, error => {
 
       })
