@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductDTO } from '../../models/product.dto.ts';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../services/domain/product.service';
+import { CategoryDTO } from '../../models/category.dto';
 
 @Component({
   selector: 'app-product',
@@ -12,6 +13,7 @@ import { ProductService } from '../../services/domain/product.service';
 export class ProductComponent implements OnInit {
 
   products: ProductDTO[] = [];
+  categories: CategoryDTO[] = [];
   page: number;
   total: number;
   formGroup: FormGroup;
@@ -46,7 +48,8 @@ export class ProductComponent implements OnInit {
   {
     this.productService.list(page)
       .subscribe(response => {
-        console.log(response);      
+        console.log(response)
+        this.products = response['data'];      
       }, error => {
 
       });

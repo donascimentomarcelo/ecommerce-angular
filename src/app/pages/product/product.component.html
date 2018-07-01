@@ -32,8 +32,8 @@
                                                                totalItems: total }">
             <th scope="row">{{ product.id }}</th>
             <td>{{ product.name }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.category.name }}</td>
             <td>
               <button type="button" class="btn btn-outline-success" (click)="edit(product)">Editar</button>
             </td>
