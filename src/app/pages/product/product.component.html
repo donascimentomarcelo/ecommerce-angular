@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="searchValue" placeholder="Pesquise pelo {{ searchPlaceholder }} da produto" (keyup)="search($event)" aria-label="Text input with dropdown button">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtro</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" (click)="selectFindById()">Id</a>
+              <a class="dropdown-item" (click)="selectFindByName()">Name</a>
+              <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="search($event)">Limpar</a>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-6">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products | paginate: { 
+                                                               itemsPerPage: 5, 
+                                                               currentPage: page,
+                                                               totalItems: total }">
+            <th scope="row">{{ product.id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+              <button type="button" class="btn btn-outline-success" (click)="edit(product)">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="products.length > 0"
+                           (pageChange)="page = $event"
+                           (pageChange)="list($event)"
+                            directionLinks="true"
+                            previousLabel="Anterior"
+                            nextLabel="Próximo"
+                            autoHide="true"></pagination-controls>
+    </div>
+    <div class="col-6">
+    <form [formGroup]="formGroup">
+        <div class="form-group">
+            <input type="hidden" class="form-control" formControlName="id">
+        </div>
+        <div class="form-group">
+          <label for="productInput">Produto : {{ idSelected }}</label>
+          <input type="text" [ngClass]="{'is-invalid': formGroup.controls.name.dirty && formGroup.controls.name.errors }"  class="form-control" formControlName="name" id="productInput" placeholder="Informe o produto">
+        </div>
+        <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Campo obrigatório</p>
+        <div class="form-group">
+          <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success" [disabled]="formGroup.invalid" (click)="save()">Salvar</button>
+              <button type="button" class="btn btn-danger"  [disabled]="formGroup.invalid" (click)="clear()">Limpar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

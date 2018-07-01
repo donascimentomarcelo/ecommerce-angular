@@ -11,9 +11,14 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  list(page: number): Observable<CategoryDTO[]>
+  paginate(page: number): Observable<CategoryDTO[]>
   {
-    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category?page=${page}`);
+    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category/paginate/all?page=${page}`);
+  };
+
+  list(): Observable<CategoryDTO[]>
+  {
+    return this.http.get<CategoryDTO[]>(`${environment.api_url}/category`);
   };
 
   create(category)

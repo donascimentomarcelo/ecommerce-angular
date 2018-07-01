@@ -30,7 +30,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() 
   {
-    this.list(0);
+    this.paginate(0);
     this.initForm();
     this.searchPlaceholder = 'nome';
     this.listType();
@@ -84,9 +84,9 @@ export class CategoryComponent implements OnInit {
     };
   };
   
-  list(page: number)
+  paginate(page: number)
   {
-    this.categoryService.list(page)
+    this.categoryService.paginate(page)
       .subscribe(response => {
         this.categories = response['data'];
         this.total = response['total']; 
@@ -182,7 +182,7 @@ export class CategoryComponent implements OnInit {
     if(event.target.value == '' || event.target.value == undefined)
     {
       this.searchValue = '';
-      this.list(0);
+      this.paginate(0);
       return;
     };
 

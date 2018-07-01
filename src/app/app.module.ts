@@ -17,6 +17,8 @@ import { CategoryComponent } from './pages/category/category/category.component'
 import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
 import { RefreshTokenProvider } from './interceptors/refreshToken.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductComponent } from './pages/product/product.component';
+import { ProductService } from './services/domain/product.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeComponent,
     LoginComponent,
     CategoryComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AuthInterceptorProvider,
     ErrorInterceptorProvider,
     RefreshTokenProvider,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })
