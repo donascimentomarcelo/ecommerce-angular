@@ -15,4 +15,9 @@ constructor(private http: HttpClient) { }
   {
     return this.http.get<ProductDTO[]>(`${environment.api_url}/product?page=${page}`);
   };
+
+  findOne(id: number): Observable<ProductDTO>
+  {
+    return this.http.get<ProductDTO>(`${environment.api_url}/product/${id}`);
+  };
 }

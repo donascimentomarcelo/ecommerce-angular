@@ -70,7 +70,51 @@ export class ProductComponent implements OnInit {
 
   save()
   {
-    console.log(this.formGroup.value)
+    if(this.formGroup.value.id)
+    {
+      this.update(this.formGroup.value);
+    }
+    else
+    {
+      this.create(this.formGroup.value);
+    };
   };
+
+  create(product: ProductDTO)
+  {
+    console.log(product);
+  };
+
+  update(product: ProductDTO)
+  {
+    console.log(product);
+  };
+
+  edit(product: ProductDTO)
+  {
+    this.clear();
+    this.idSelected = product.id;
+
+    this.formGroup = this.formBuilder.group({
+      id: [product.id],
+      name: [product.name],
+      category_id: [product.category_id],
+      price: [product.price],
+      description: [product.description]
+    });
+  };
+
+  clear()
+  {
+    this.idSelected =  null;
+    this.formGroup.reset({
+      'id': null,
+      'name': null,
+      'category_id': null,
+      'price': null,
+      'description': null
+    });
+    console.log(this.formGroup.value)
+  };  
 
 }
