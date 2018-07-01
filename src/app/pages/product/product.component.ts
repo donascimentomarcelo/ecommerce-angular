@@ -40,7 +40,10 @@ export class ProductComponent implements OnInit {
   {
     this.formGroup = this.formBuilder.group({
       id: [null],
-      name: [null, [Validators.required]],
+      name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(80)])],
+      category_id: [null, [Validators.required,]],
+      price: [null, [Validators.required,  Validators.minLength(1), Validators.maxLength(10)]],
+      description: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]]
     });
   };
 
@@ -48,7 +51,6 @@ export class ProductComponent implements OnInit {
   {
     this.productService.list(page)
       .subscribe(response => {
-        console.log(response)
         this.products = response['data'];   
         this.total = response['total'];   
       }, error => {
@@ -60,10 +62,15 @@ export class ProductComponent implements OnInit {
   {
     this.categoryService.list()
       .subscribe(response => {
-        // console.log(response);
+        this.categories = response;
       }, error => {
 
       })
+  };
+
+  save()
+  {
+    console.log(this.formGroup.value)
   };
 
 }
