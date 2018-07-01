@@ -32,7 +32,7 @@
                                                                totalItems: total }">
             <th scope="row">{{ product.id }}</th>
             <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ product.price | CurrencyPrice }}</td>
             <td>{{ product.category.name }}</td>
             <td>
               <button type="button" class="btn btn-outline-success" (click)="edit(product)">Editar</button>
@@ -76,7 +76,12 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
               </div>
-                <input type="number" [ngClass]="{'is-invalid': formGroup.controls.price.dirty && formGroup.controls.price.errors }" class="form-control" formControlName="price" placeholder="Informe o preço do produto" id="priceInput">
+                <input type="number" 
+                       [ngClass]="{'is-invalid': formGroup.controls.price.dirty && formGroup.controls.price.errors }" 
+                       class="form-control" 
+                       formControlName="price" 
+                       placeholder="Informe o preço do produto" 
+                       id="priceInput">
             </div>
         </div>
         <p class="danger" *ngIf="formGroup.controls.price.dirty && formGroup.controls.price.hasError('required')" margin-left>Campo obrigatório</p>

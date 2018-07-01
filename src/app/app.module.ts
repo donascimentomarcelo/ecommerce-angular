@@ -1,3 +1,4 @@
+import { PipeModule } from './pipe/Pipe.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -38,6 +39,7 @@ import { ProductService } from './services/domain/product.service';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxPaginationModule,
+    PipeModule,
   ],
   providers: [
     AuthService,
