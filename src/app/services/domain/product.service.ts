@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ProductDTO } from '../../models/product.dto.ts';
+import { ProductDTO } from '../../models/product.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +19,10 @@ constructor(private http: HttpClient) { }
   findOne(id: number): Observable<ProductDTO>
   {
     return this.http.get<ProductDTO>(`${environment.api_url}/product/${id}`);
+  };
+
+  create(product: ProductDTO)
+  {
+    return this.http.post(`${environment.api_url}/product`, product);
   };
 }

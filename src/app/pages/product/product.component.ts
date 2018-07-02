@@ -1,6 +1,6 @@
 import { CategoryService } from './../../services/domain/category.service';
 import { Component, OnInit } from '@angular/core';
-import { ProductDTO } from '../../models/product.dto.ts';
+import { ProductDTO } from '../../models/product.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../services/domain/product.service';
 import { CategoryDTO } from '../../models/category.dto';
@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
   {
     this.formGroup = this.formBuilder.group({
       id: [null],
-      name: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(80)])],
+      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
       category_id: [null, [Validators.required,]],
       price: [null, [Validators.required,  Validators.minLength(1), Validators.maxLength(10)]],
       description: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]]
@@ -82,7 +82,20 @@ export class ProductComponent implements OnInit {
 
   create(product: ProductDTO)
   {
-    console.log(product);
+    this.productService.create(product)
+      .subscribe(response => {
+        let prod: any = {
+            id: response['id'], 
+            name: response['name'],
+            price: response['price'],
+            description: response['description'],
+            category: response['category'],
+            category_id: response['category_id']
+          }
+        this.products.push(prod)
+      }, error => {
+
+      });
   };
 
   update(product: ProductDTO)
@@ -92,7 +105,6 @@ export class ProductComponent implements OnInit {
 
   edit(product: ProductDTO)
   {
-    this.clear();
     this.idSelected = product.id;
 
     this.formGroup = this.formBuilder.group({
@@ -106,15 +118,9 @@ export class ProductComponent implements OnInit {
 
   clear()
   {
-    this.idSelected =  null;
-    this.formGroup.reset({
-      'id': null,
-      'name': null,
-      'category_id': null,
-      'price': null,
-      'description': null
-    });
-    console.log(this.formGroup.value)
+    this.idSelected = null;
+    this.formGroup.reset();
+    console.log(this.formGroup)
   };  
 
 }
