@@ -31,6 +31,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() 
   {
+    this.searchPlaceholder = 'nome';
     this.loadProducts(0);
     this.loadCategories();
     this.initForm();
@@ -127,10 +128,10 @@ export class ProductComponent implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       id: [product.id],
-      name: [product.name],
-      category_id: [product.category_id],
-      price: [product.price],
-      description: [product.description]
+      name: [product.name, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      category_id: [product.category_id, [Validators.required,]],
+      price: [product.price, [Validators.required,  Validators.minLength(1), Validators.maxLength(10)]],
+      description: [product.description, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]]
     });
   };
 
@@ -139,6 +140,43 @@ export class ProductComponent implements OnInit {
     this.idSelected = null;
     this.formGroup.reset();
     console.log(this.formGroup)
-  };  
+  };
+  
+  search(event: any)
+  {
+    if(event.target.value === '' || event.target.value === undefined)
+    {
+      this.searchValue = '';
+      this.loadProducts(0);
+      return;
+    };
+
+    switch(this.searchPlaceholder)
+    {
+      case 'id':
+      this.findProductById(event.target.value);
+      break;
+      
+    };
+  };
+  
+  selectFindById()
+  {
+    this.findByName =  false;
+    this.findById = true;
+    this.searchPlaceholder = 'id';
+  };
+
+  findProductById(id: number)
+  {
+    this.productService.findOne(id)
+      .subscribe(response => {
+        let value: any = [];
+        value.push(response);
+        this.products = value;
+      }, error => {
+
+      });
+  };
 
 }
