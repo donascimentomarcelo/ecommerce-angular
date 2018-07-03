@@ -25,4 +25,9 @@ constructor(private http: HttpClient) { }
   {
     return this.http.post(`${environment.api_url}/product`, product);
   };
+
+  update(product: ProductDTO, id: number)
+  {
+    return this.http.put(`${environment.api_url}/product/${id}`, product);
+  };
 }

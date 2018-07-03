@@ -72,7 +72,7 @@ export class ProductComponent implements OnInit {
   {
     if(this.formGroup.value.id)
     {
-      this.update(this.formGroup.value);
+      this.update(this.formGroup.value, this.formGroup.value.id);
     }
     else
     {
@@ -98,9 +98,27 @@ export class ProductComponent implements OnInit {
       });
   };
 
-  update(product: ProductDTO)
+  update(product: ProductDTO, id: number)
   {
-    console.log(product);
+    this.productService.update(product, id)
+      .subscribe(response => {
+        
+        let updatedProduct = this.products.find(this.findIndexToUpdate, product.id);
+
+        let index = this.products.indexOf(updatedProduct);
+
+        this.products[index] = response as ProductDTO;
+
+        this.clear();
+
+      }, error => {
+
+      });
+  };
+
+  findIndexToUpdate(item)
+  {
+    return item.id === this;
   };
 
   edit(product: ProductDTO)
