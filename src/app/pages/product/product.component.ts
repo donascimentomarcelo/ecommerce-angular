@@ -139,7 +139,6 @@ export class ProductComponent implements OnInit {
   {
     this.idSelected = null;
     this.formGroup.reset();
-    console.log(this.formGroup)
   };
   
   search(event: any)
@@ -157,6 +156,9 @@ export class ProductComponent implements OnInit {
       this.findProductById(event.target.value);
       break;
       
+      case 'nome':
+      this.findProductByName(event.target.value);
+      break;
     };
   };
   
@@ -167,6 +169,13 @@ export class ProductComponent implements OnInit {
     this.searchPlaceholder = 'id';
   };
 
+  selectFindByName()
+  {
+    this.findByName = true;
+    this.findById = false;
+    this.searchPlaceholder = 'nome';
+  };
+
   findProductById(id: number)
   {
     this.productService.findOne(id)
@@ -174,6 +183,16 @@ export class ProductComponent implements OnInit {
         let value: any = [];
         value.push(response);
         this.products = value;
+      }, error => {
+
+      });
+  };
+
+  findProductByName(name: string)
+  {
+    this.productService.findByName(name)
+      .subscribe(response => {
+        this.products = response;
       }, error => {
 
       });
