@@ -35,4 +35,9 @@ constructor(private http: HttpClient) { }
   {
     return this.http.get<ProductDTO[]>(`${environment.api_url}/product/findByName/${name}`);
   };
+
+  findByCategoryName(name: string): Observable<ProductDTO[]>
+  {
+    return this.http.get<ProductDTO[]>(`${environment.api_url}/product/findByCategoryName/${name}`);
+  };
 }

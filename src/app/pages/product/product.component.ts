@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
   searchValue: string = '';
   findByName: boolean =  true;
   findById: boolean =  false;
+  findByCatName: boolean =  false;
   searchPlaceholder: string;
 
   constructor(
@@ -150,14 +151,21 @@ export class ProductComponent implements OnInit {
       return;
     };
 
+    const val: any = event.target.value; 
+
     switch(this.searchPlaceholder)
     {
+
       case 'id':
-      this.findProductById(event.target.value);
+      this.findProductById(val);
       break;
       
       case 'nome':
-      this.findProductByName(event.target.value);
+      this.findProductByName(val);
+      break;
+
+      case 'nome da categoria':
+      this.findByCategoryName(val);
       break;
     };
   };
@@ -166,6 +174,7 @@ export class ProductComponent implements OnInit {
   {
     this.findByName =  false;
     this.findById = true;
+    this.findByCatName = false;
     this.searchPlaceholder = 'id';
   };
 
@@ -173,7 +182,16 @@ export class ProductComponent implements OnInit {
   {
     this.findByName = true;
     this.findById = false;
+    this.findByCatName = false;
     this.searchPlaceholder = 'nome';
+  };
+
+  selectFindByCategoryName()
+  {
+    this.findByName = false;
+    this.findById = false;
+    this.findByCatName = true;
+    this.searchPlaceholder = 'nome da categoria';
   };
 
   findProductById(id: number)
@@ -191,6 +209,16 @@ export class ProductComponent implements OnInit {
   findProductByName(name: string)
   {
     this.productService.findByName(name)
+      .subscribe(response => {
+        this.products = response;
+      }, error => {
+
+      });
+  };
+
+  findByCategoryName(name: string)
+  {
+    this.productService.findByCategoryName(name)
       .subscribe(response => {
         this.products = response;
       }, error => {
