@@ -20,6 +20,7 @@ import { RefreshTokenProvider } from './interceptors/refreshToken.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductComponent } from './pages/product/product.component';
 import { ProductService } from './services/domain/product.service';
+import { SignupComponent } from './pages/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ProductService } from './services/domain/product.service';
     LoginComponent,
     CategoryComponent,
     ProductComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

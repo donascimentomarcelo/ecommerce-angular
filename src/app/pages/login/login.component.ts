@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    private appComponent: AppComponent) 
+    private appComponent: AppComponent,) 
     { 
       let localUser = this.storageService.getLocalUser();
 
@@ -47,4 +47,9 @@ export class LoginComponent implements OnInit {
         this.appComponent.name = this.storageService.getLocalUser().name;
       }, error =>{ });
   };
+
+  signup()
+  {
+    this.router.navigate(['signup']);
+  }
 }

@@ -1,15 +1,17 @@
-<div class="jumbotron">
+<div class="jumbotron size-div">
   <form [formGroup]="formGroup" (ngSubmit)="login()">
       <div class="form-group">
-        <label for="exampleInputEmail1">E-mail</label>
+        <label for="exampleInputEmail1">E-mail :</label>
         <input type="email" formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Insira seu e-mail">
       </div>
       <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors" margin-left>E-mail inválido</p>
       <div class="form-group">
-        <label for="password">Senha</label>
+        <label for="password">Senha :</label>
         <input type="password" formControlName="password" class="form-control" id="password" placeholder="Insira sua senha">
       </div>
       <p class="danger" *ngIf="formGroup.controls.password.dirty && formGroup.controls.password.errors" margin-left>Informe a senha</p>
-      <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Enviar</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="formGroup.invalid">Enviar</button>
+      <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="signup()">Criar Conta</button>
+      <button type="button" class="btn btn-dark btn-lg btn-block">Esqueci a senha</button>
   </form>
 </div>
