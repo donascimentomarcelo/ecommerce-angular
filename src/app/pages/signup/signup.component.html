@@ -46,7 +46,7 @@
             </div>
             <div class="form-group col-md-2">
               <label for="inputZip">CEP</label>
-              <input type="text" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipCode">
+              <input type="text" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipcode" maxlength="9">
             </div>
           </div>
           <div class="form-group">
