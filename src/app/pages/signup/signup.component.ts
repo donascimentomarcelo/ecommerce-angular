@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ZipcodeService } from '../../services/zipcode.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private zipcodeService: ZipcodeService,
   ) { }
 
   formGroup: FormGroup;
@@ -45,6 +47,12 @@ export class SignupComponent implements OnInit {
   getZipcode()
   {
     console.log(this.zipcode)
+    this.zipcodeService.getZipcodeAPI(this.zipcode)
+      .subscribe(response => {
+        console.log(response)
+      }, error => {
+        console.log(error)
+      })
   }
 
   login()

@@ -21,6 +21,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductComponent } from './pages/product/product.component';
 import { ProductService } from './services/domain/product.service';
 import { SignupComponent } from './pages/signup/signup.component';
+import { ZipcodeService } from './services/zipcode.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { SignupComponent } from './pages/signup/signup.component';
     ErrorInterceptorProvider,
     RefreshTokenProvider,
     ProductService,
+    ZipcodeService
   ],
   bootstrap: [AppComponent]
 })
