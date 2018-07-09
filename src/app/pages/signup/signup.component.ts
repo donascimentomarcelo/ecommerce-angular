@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ZipcodeService } from '../../services/zipcode.service';
 import { ToastrService } from 'ngx-toastr';
+import { StateService } from '../../services/state.service';
+import { StateDTO } from '../../models/state.dto';
 
 @Component({
   selector: 'app-signup',
@@ -16,14 +18,17 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private zipcodeService: ZipcodeService,
     private toastrService: ToastrService,
+    private stateService: StateService,
   ) { }
 
   formGroup: FormGroup;
   zipcode: string;
+  states: StateDTO[] = [];
 
   ngOnInit() 
   {
     this.initForm();
+    this.getState();
   };
 
   initForm()
@@ -62,6 +67,10 @@ export class SignupComponent implements OnInit {
 
   getZipcode()
   {
+    if(this.zipcode == null)
+    {
+      return;
+    };
     this.zipcodeService.getZipcodeAPI(this.zipcode)
       .subscribe(response => {
         if(response['erro'] !== true)
@@ -93,4 +102,13 @@ export class SignupComponent implements OnInit {
     console.log(this.formGroup.value)
   };
 
+  getState()
+  {
+    this.stateService.getStateAPI()
+      .subscribe(response => {
+        this.states = response;
+      }, error => {
+
+      });
+  };
 }
