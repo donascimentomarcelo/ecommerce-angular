@@ -29,17 +29,31 @@ export class SignupComponent implements OnInit {
   initForm()
   {
     this.formGroup = this.formBuilder.group({
-      email: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      password_confirmation: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email, Validators.maxLength(80)]],
+      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
+      password_confirmation: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]],
       city: [null, [Validators.required]],
       state: [null, [Validators.required]],
       zipcode: [null, [Validators.required]],
-    });
+    }, {validator: this.matchingPasswords('password', 'password_confirmation')});
   };
+
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        this.formGroup.controls.password_confirmation.setErrors({"notEqual": true})
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    }
+  }
 
   back()
   {
