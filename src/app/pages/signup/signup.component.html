@@ -38,7 +38,7 @@
           <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="inputZip">CEP</label>
-                <input type="text" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipcode" maxlength="9">
+                <input type="text" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipcode" maxlength="9" mask="00000-000" >
               </div>
               <div class="form-group col-md-10">
                   <label for="inputAddress">Endereço</label>
