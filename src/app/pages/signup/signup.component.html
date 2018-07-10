@@ -59,7 +59,7 @@
             </div>
             <div class="form-group col-md-2">
                 <label for="inputPhone">Telefone :</label>
-                <input type="text" class="form-control" id="inputPhone" placeholder="Informe seu telefone" formControlName="phone">
+                <input type="text" class="form-control" id="inputPhone" placeholder="Informe seu telefone" formControlName="phone" (blur)="checkPhone(phone)" [(ngModel)]="phone" mask="{{ maskPhone }}">
             </div>
           </div>
           <div class="form-group">

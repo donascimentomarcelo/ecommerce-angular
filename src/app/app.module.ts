@@ -22,6 +22,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { ProductService } from './services/domain/product.service';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ZipcodeService } from './services/zipcode.service';
+import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ZipcodeService } from './services/zipcode.service';
     ToastrModule.forRoot(),
     NgxPaginationModule,
     PipeModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     AuthService,

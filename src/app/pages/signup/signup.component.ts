@@ -24,6 +24,8 @@ export class SignupComponent implements OnInit {
   formGroup: FormGroup;
   zipcode: string;
   states: StateDTO[] = [];
+  phone: string;
+  maskPhone: string = '(000) 00000-0000';
 
   ngOnInit() 
   {
@@ -110,5 +112,13 @@ export class SignupComponent implements OnInit {
       }, error => {
 
       });
+  };
+
+  checkPhone()
+  {
+    if(this.phone.length === 11)
+    {
+      this.maskPhone = '(000) 0000-0000';
+    };
   };
 }
