@@ -40,11 +40,11 @@ export class SignupComponent implements OnInit {
       name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
       password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
       password_confirmation: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
-      phone: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      state: [null, [Validators.required]],
-      zipcode: [null, [Validators.required]],
+      phone: [null, [Validators.required, Validators.minLength(11)]],
+      address: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      state: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      zipcode: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
     }, {validator: this.matchingPasswords('password', 'password_confirmation')});
   };
 

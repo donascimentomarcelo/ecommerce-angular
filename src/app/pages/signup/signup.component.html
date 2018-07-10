@@ -38,17 +38,26 @@
           <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="inputZip">CEP</label>
-                <input type="text" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipcode" maxlength="9" mask="00000-000" >
-              </div>
-              <div class="form-group col-md-10">
-                  <label for="inputAddress">Endereço</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="Informe seu endereço" formControlName="address">
+                <input type="text" [ngClass]="{'is-invalid': formGroup.controls.zipcode.dirty && formGroup.controls.zipcode.errors }" class="form-control" id="inputZip" placeholder="Informe seu CEP" [(ngModel)]="zipcode" (blur)="getZipcode(zipcode)" formControlName="zipcode" maxlength="9" mask="00000-000" >
+                <p class="danger" *ngIf="formGroup.controls.zipcode.dirty && formGroup.controls.zipcode.hasError('required')" margin-left>Campo obrigatório</p>
+                <p class="danger" *ngIf="formGroup.controls.zipcode.dirty && formGroup.controls.zipcode.hasError('maxlength')" margin-left>CEP inválido</p>
+                <p class="danger" *ngIf="formGroup.controls.zipcode.dirty && formGroup.controls.zipcode.hasError('minlength')" margin-left>CEP inválido</p>
+            </div>
+            <div class="form-group col-md-10">
+                <label for="inputAddress">Endereço</label>
+                <input type="text" [ngClass]="{'is-invalid': formGroup.controls.address.dirty && formGroup.controls.address.errors }" class="form-control" id="inputAddress" placeholder="Informe seu endereço" formControlName="address">
+                <p class="danger" *ngIf="formGroup.controls.address.dirty && formGroup.controls.address.hasError('required')" margin-left>Campo obrigatório</p>
+                <p class="danger" *ngIf="formGroup.controls.address.dirty && formGroup.controls.address.hasError('maxlength')" margin-left>O campo deve ter no máximo 80 caracteres</p>
+                <p class="danger" *ngIf="formGroup.controls.address.dirty && formGroup.controls.address.hasError('minlength')" margin-left>O campo deve ter no mínimo 3 caracteres</p>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputCity">Cidade</label>
-              <input type="text" class="form-control" id="inputCity" placeholder="Informe sua cidade" formControlName="city">
+              <input type="text" [ngClass]="{'is-invalid': formGroup.controls.city.dirty && formGroup.controls.city.errors }" class="form-control" id="inputCity" placeholder="Informe sua cidade" formControlName="city">
+              <p class="danger" *ngIf="formGroup.controls.city.dirty && formGroup.controls.city.hasError('required')" margin-left>Campo obrigatório</p>
+              <p class="danger" *ngIf="formGroup.controls.city.dirty && formGroup.controls.city.hasError('maxlength')" margin-left>O campo deve ter no máximo 80 caracteres</p>
+              <p class="danger" *ngIf="formGroup.controls.city.dirty && formGroup.controls.city.hasError('minlength')" margin-left>O campo deve ter no mínimo 3 caracteres</p>
             </div>
             <div class="form-group col-md-4">
               <label for="inputState">Estado</label>
@@ -59,7 +68,9 @@
             </div>
             <div class="form-group col-md-2">
                 <label for="inputPhone">Telefone :</label>
-                <input type="text" class="form-control" id="inputPhone" placeholder="Informe seu telefone" formControlName="phone" (blur)="checkPhone(phone)" [(ngModel)]="phone" mask="{{ maskPhone }}">
+                <input type="text" [ngClass]="{'is-invalid': formGroup.controls.phone.dirty && formGroup.controls.phone.errors }" class="form-control" id="inputPhone" placeholder="Informe seu telefone" formControlName="phone" (blur)="checkPhone(phone)" [(ngModel)]="phone" mask="{{ maskPhone }}">
+                <p class="danger" *ngIf="formGroup.controls.phone.dirty && formGroup.controls.phone.hasError('required')" margin-left>Campo obrigatório</p>
+                <p class="danger" *ngIf="formGroup.controls.phone.dirty && formGroup.controls.phone.hasError('minlength')" margin-left>Telefone inválido</p>  
             </div>
           </div>
           <div class="form-group">
