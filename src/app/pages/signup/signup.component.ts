@@ -1,3 +1,5 @@
+import { UserDTO } from './../../models/user.dto';
+import { SignupService } from './../../services/domain/signup.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +21,7 @@ export class SignupComponent implements OnInit {
     private zipcodeService: ZipcodeService,
     private toastrService: ToastrService,
     private stateService: StateService,
+    private signupService: SignupService,
   ) { }
 
   formGroup: FormGroup;
@@ -26,6 +29,7 @@ export class SignupComponent implements OnInit {
   states: StateDTO[] = [];
   phone: string;
   maskPhone: string = '(000) 00000-0000';
+  user: UserDTO;
 
   ngOnInit() 
   {
@@ -99,9 +103,27 @@ export class SignupComponent implements OnInit {
       });
   };
 
-  login()
+  create()
   {
-    console.log(this.formGroup.value)
+    this.user = {
+      name: this.formGroup.value.name,
+      password: this.formGroup.value.password,
+      password_confirmation: this.formGroup.value.password_confirmation,
+      email: this.formGroup.value.email,
+      client: {
+        phone: this.formGroup.value.phone ,
+        address: this.formGroup.value.address ,
+        city: this.formGroup.value.city ,
+        state: this.formGroup.value.state ,
+        zipcode: this.formGroup.value.zipcode ,
+      }
+    };
+    this.signupService.create(this.user)
+      .subscribe(response => {
+        console.log(response)
+      }, error => {
+
+      });
   };
 
   getState()

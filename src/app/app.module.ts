@@ -23,6 +23,7 @@ import { ProductService } from './services/domain/product.service';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ZipcodeService } from './services/zipcode.service';
 import {NgxMaskModule} from 'ngx-mask';
+import { SignupService } from './services/domain/signup.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {NgxMaskModule} from 'ngx-mask';
     ErrorInterceptorProvider,
     RefreshTokenProvider,
     ProductService,
-    ZipcodeService
+    ZipcodeService,
+    SignupService
   ],
   bootstrap: [AppComponent]
 })
