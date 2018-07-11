@@ -120,7 +120,10 @@ export class SignupComponent implements OnInit {
     };
     this.signupService.create(this.user)
       .subscribe(response => {
-        console.log(response)
+        this.toastrService.success('Seu usuário foi criado com sucesso !', 'Parabéns, '+ response['name'] + ' !!!', {
+          timeOut: 3000,
+        });
+        this.router.navigate(['login']);
       }, error => {
 
       });
