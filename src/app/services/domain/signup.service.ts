@@ -12,8 +12,12 @@ constructor(private http: HttpClient) { }
 
   create(user: UserDTO)
   {
-    console.log(user)
     return this.http.post(`${environment.api_url}/client`, user);
-  }
+  };
+
+  checkIfEmailExist(email: string)
+  {
+    return this.http.get(`${environment.api_url}/client/findIfEmailExist/${email}`);
+  };
 
 }

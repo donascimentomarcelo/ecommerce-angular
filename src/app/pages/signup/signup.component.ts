@@ -30,6 +30,7 @@ export class SignupComponent implements OnInit {
   phone: string;
   maskPhone: string = '(000) 00000-0000';
   user: UserDTO;
+  email: string;
 
   ngOnInit() 
   {
@@ -145,5 +146,15 @@ export class SignupComponent implements OnInit {
     {
       this.maskPhone = '(000) 0000-0000';
     };
+  };
+
+  checkIfEmailExist(email)
+  {
+    this.signupService.checkIfEmailExist(email)
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        console.log(error);
+      })
   };
 }
