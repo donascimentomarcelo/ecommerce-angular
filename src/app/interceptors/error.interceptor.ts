@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { FieldMessage } from '../models/fieldmessage';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor{
@@ -15,32 +16,45 @@ export class ErrorInterceptor implements HttpInterceptor{
             .pipe(
             catchError((error, caught) => {
 
-                let errorObj = error;
-
-                if(errorObj.error)
-                {
-                    errorObj = errorObj.error;
-                };
-
                 console.log('Erro detectado');
-                console.log(errorObj);
+                console.log(error);
 
-                switch(errorObj.status)
+                switch(error.status)
                 {
                     case 401:
-                    this.handler401(errorObj.error);
+                    this.handler401(error);
+                    break;
+
+                    case 422:
+                    this.handler422(error);
                     break;
                 };
 
-                return observableThrowError(errorObj);
+                return observableThrowError(error);
             })) as any;
     };
 
-    handler401(error)
+    handler401(objError)
     {
-        this.toastr.error(error, 'Erro de autorização', {
+        this.toastr.error(objError.error, 'Erro de autorização', {
             timeOut: 3000,
           });
+    };
+
+    handler422(objError)
+    {
+        this.toastr.error(this.listError(objError.error), 'Erro de validação', {
+            timeOut: 3000,
+          });
+    };
+
+    listError(error: FieldMessage[]) : string 
+    {
+        const messageError = error.map(
+            error => error.message
+        );
+        
+        return messageError.toString();
     };
 }
 

@@ -7,6 +7,7 @@
               <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.hasError('required')" margin-left>Campo obrigatório</p>
               <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.hasError('maxlength')" margin-left>O campo deve ter no máximo 80 caracteres</p>
               <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.hasError('email')" margin-left>E-mail inválido</p>
+              <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.hasError('invalidEmail')" margin-left>Insira outro e-mail pois esse já está em uso</p>
           </div>
         </div>
         <div class="form-row">

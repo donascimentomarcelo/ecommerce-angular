@@ -152,9 +152,9 @@ export class SignupComponent implements OnInit {
   {
     this.signupService.checkIfEmailExist(email)
       .subscribe(response => {
-        console.log(response);
+      
       }, error => {
-        console.log(error);
-      })
+        this.formGroup.controls.email.setErrors({"invalidEmail": true});
+      });
   };
 }
