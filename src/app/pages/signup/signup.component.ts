@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
   maskPhone: string = '(000) 00000-0000';
   user: UserDTO;
   email: string;
+  iAmSure: boolean = false;
 
   ngOnInit() 
   {
@@ -48,7 +49,7 @@ export class SignupComponent implements OnInit {
       phone: [null, [Validators.required, Validators.minLength(11)]],
       address: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
       city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
-      state: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+      state: [null, [Validators.required, Validators.minLength(2)]],
       zipcode: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
     }, {validator: this.matchingPasswords('password', 'password_confirmation')});
   };
@@ -156,5 +157,10 @@ export class SignupComponent implements OnInit {
       }, error => {
         this.formGroup.controls.email.setErrors({"invalidEmail": true});
       });
+  };
+
+  changeCheckbox()
+  {
+    this.iAmSure = !this.iAmSure;
   };
 }
