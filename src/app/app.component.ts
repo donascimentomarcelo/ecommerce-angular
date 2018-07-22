@@ -40,16 +40,8 @@ export class AppComponent {
   {
     this.userService.getImageBucket(id)
       .subscribe(response => {    
-      }, resp => {
-          if(resp == 200)
-          {
-            this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
-          }
-          else
-          {
-            this.imageUrl = 'assets/images/avatar-blank.png';
-          };
-      });
+        this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
+      }, resp => { });
   };
   
   openMenu()

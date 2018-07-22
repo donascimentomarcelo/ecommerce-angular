@@ -14,11 +14,8 @@ export class UserService {
 
   getImageBucket(id: string): Observable<any>
   {
-    return this.http.get<any>(`${API_CONFIG.bucketBaseUrl}client${id}.jpg`)
-    .pipe(
-      catchError((error, caught) => {
-          return observableThrowError(error.status);
-      })) as any;
+    let url = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
+    return this.http.get(url, {responseType: 'blob'});
   };
 
 }
