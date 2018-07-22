@@ -1,3 +1,5 @@
+import { API_CONFIG } from './config/api.config';
+import { UserDTO } from './models/user.dto';
 import { Component } from '@angular/core';
 import { StorageService } from './services/storage.service';
 import { Router } from '@angular/router';
@@ -13,6 +15,7 @@ export class AppComponent {
   opened: boolean = true;
   logged: boolean = false;
   name: string;
+  imageUrl: any;
   
   constructor(
     private storageService: StorageService,
@@ -25,6 +28,8 @@ export class AppComponent {
     {
       this.logged = true;
       this.name = storageService.getLocalUser().name;
+      const id = storageService.getLocalUser().id;
+      this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
     };
 
   };

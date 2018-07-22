@@ -36,7 +36,7 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handler401(objError)
     {
-        this.toastr.error(objError.error, 'Erro de autorização', {
+        this.toastr.error(objError.error.error, 'Erro de autorização', {
             timeOut: 3000,
           });
     };
