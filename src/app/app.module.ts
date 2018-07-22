@@ -24,6 +24,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { ZipcodeService } from './services/zipcode.service';
 import {NgxMaskModule} from 'ngx-mask';
 import { SignupService } from './services/domain/signup.service';
+import { UserService } from './services/domain/user.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { SignupService } from './services/domain/signup.service';
     RefreshTokenProvider,
     ProductService,
     ZipcodeService,
-    SignupService
+    SignupService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

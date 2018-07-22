@@ -16,9 +16,6 @@ export class ErrorInterceptor implements HttpInterceptor{
             .pipe(
             catchError((error, caught) => {
 
-                console.log('Erro detectado');
-                console.log(error);
-
                 switch(error.status)
                 {
                     case 401:

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { StorageService } from './services/storage.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/domain/user.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
   constructor(
     private storageService: StorageService,
     private router: Router,
-    private authService: AuthService) 
+    private authService: AuthService,
+    private userService: UserService) 
   { 
     let localUser = this.storageService.getLocalUser();
 
@@ -29,9 +31,25 @@ export class AppComponent {
       this.logged = true;
       this.name = storageService.getLocalUser().name;
       const id = storageService.getLocalUser().id;
-      this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
+      this.checkIfImageExistAtBucket(id);
     };
 
+  };
+
+  checkIfImageExistAtBucket(id: string)
+  {
+    this.userService.getImageBucket(id)
+      .subscribe(response => {    
+      }, resp => {
+          if(resp == 200)
+          {
+            this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
+          }
+          else
+          {
+            this.imageUrl = 'assets/images/avatar-blank.png';
+          };
+      });
   };
   
   openMenu()
@@ -43,11 +61,18 @@ export class AppComponent {
   {
     this.authService.logout()
       .subscribe(reponse => {
-        this.storageService.setLocalUser(null);
-        this.logged = false;
-        this.opened = true;
-        this.router.navigate(['login']);
-      }, error => {});
+        this.doLogout();
+      }, error => {
+        this.doLogout();
+      });
+  };
+    
+  doLogout()
+  {
+    this.storageService.setLocalUser(null);
+    this.logged = false;
+    this.opened = true;
+    this.router.navigate(['login']);
   };
 
 }
