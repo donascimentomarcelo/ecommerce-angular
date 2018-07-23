@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { CategoryComponent } from './pages/category/category/category.component';
 import { ProductComponent } from './pages/product/product.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'product', component: ProductComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'profile/:id', component: ProfileComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

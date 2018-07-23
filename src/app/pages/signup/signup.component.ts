@@ -1,5 +1,5 @@
-import { UserDTO } from './../../models/user.dto';
-import { SignupService } from './../../services/domain/signup.service';
+import { UserDTO } from '../../models/user.dto';
+import { SignupService } from '../../services/domain/signup.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

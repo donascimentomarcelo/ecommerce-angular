@@ -1,3 +1,4 @@
+import { ProfileComponent } from './pages/profile/profile.component';
 import { PipeModule } from './pipe/Pipe.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { ZipcodeService } from './services/zipcode.service';
 import {NgxMaskModule} from 'ngx-mask';
 import { SignupService } from './services/domain/signup.service';
 import { UserService } from './services/domain/user.service';
+import { ProfileService } from './services/domain/profile.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { UserService } from './services/domain/user.service';
     CategoryComponent,
     ProductComponent,
     SignupComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { UserService } from './services/domain/user.service';
     ProductService,
     ZipcodeService,
     SignupService,
-    UserService
+    UserService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })
