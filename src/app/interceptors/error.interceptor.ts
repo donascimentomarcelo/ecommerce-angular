@@ -15,7 +15,6 @@ export class ErrorInterceptor implements HttpInterceptor{
         return next.handle(req)
             .pipe(
             catchError((error, caught) => {
-
                 switch(error.status)
                 {
                     case 401:

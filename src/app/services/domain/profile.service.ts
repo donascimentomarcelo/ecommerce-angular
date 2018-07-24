@@ -11,4 +11,8 @@ export class ProfileService {
 
 constructor(private http: HttpClient) { }
 
+  update(user: UserDTO, id: string): Observable<UserDTO>
+  {
+    return this.http.put<UserDTO>(`${environment.api_url}/client/${id}`, user);
+  }
 }

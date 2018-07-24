@@ -9,6 +9,7 @@ import { SignupService } from '../../services/domain/signup.service';
 import { StateDTO } from '../../models/state.dto';
 import { UserDTO } from '../../models/user.dto';
 import { ProfileService } from '../../services/domain/profile.service';
+import { API_CONFIG } from '../../config/api.config';
 
 @Component({
   selector: 'app-profile',
@@ -38,12 +39,22 @@ export class ProfileComponent implements OnInit {
   email: string;
   iAmSure: boolean = false;
   id: string = this.activatedRoute.snapshot.paramMap.get('id');
+  imageUrl: string;
 
   ngOnInit() 
   {
     this.initForm();
     this.getState();
     this.fillInputs(this.id)
+    this.checkIfEmailExist(this.id)
+  };
+
+  checkIfImageExistAtBucket(id: string)
+  {
+    this.userService.getImageBucket(id)
+      .subscribe(response => {    
+        this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
+      }, resp => { });
   };
 
   initForm()
@@ -51,30 +62,14 @@ export class ProfileComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email, Validators.maxLength(80)]],
       name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
-      password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
-      password_confirmation: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
       phone: [null, [Validators.required, Validators.minLength(11)]],
       address: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
       city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
       state: [null, [Validators.required, Validators.minLength(2)]],
       zipcode: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
-    }, {validator: this.matchingPasswords('password', 'password_confirmation')});
+    });
   };
-
-  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
-    return (group: FormGroup): {[key: string]: any} => {
-      let password = group.controls[passwordKey];
-      let confirmPassword = group.controls[confirmPasswordKey];
-
-      if (password.value !== confirmPassword.value) {
-        this.formGroup.controls.password_confirmation.setErrors({"notEqual": true})
-        return {
-          mismatchedPasswords: true
-        };
-      }
-    }
-  }
-
+  
   getZipcode()
   {
     if(this.zipcode == null)
@@ -109,7 +104,29 @@ export class ProfileComponent implements OnInit {
 
   update()
   {
+    this.user = {
+      name: this.formGroup.value.name,
+      password: null,
+      password_confirmation: null,
+      email: this.formGroup.value.email,
+      client: {
+        phone: this.formGroup.value.phone ,
+        address: this.formGroup.value.address ,
+        city: this.formGroup.value.city ,
+        state: this.formGroup.value.state ,
+        zipcode: this.formGroup.value.zipcode ,
+      }
+    };
     
+    this.profileService.update(this.user, this.id)
+      .subscribe(response => {
+        this.toastrService.success('Seu usuário foi alterado com sucesso !', '', {
+          timeOut: 3000,
+        });
+
+      }, error => {
+        
+      });
   };
 
   getState()
@@ -150,8 +167,6 @@ export class ProfileComponent implements OnInit {
   { 
     this.userService.findOne(id)
       .subscribe(response => {
-        console.log(response);
-
         this.formGroup.controls.name.setValue(response.name);
         this.formGroup.controls.email.setValue(response.email);
 
