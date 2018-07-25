@@ -3,6 +3,9 @@
         <div class="container-custom-avatar">
             <img [src]="imageUrl || 'assets/images/avatar-blank.png'" class="custom-avatar"/>
         </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary">Mudar foto</button>
+        </div>
     </div>
     <form (ngSubmit)="update()" [formGroup]="formGroup">
         <div class="form-row">

@@ -27,6 +27,7 @@ import {NgxMaskModule} from 'ngx-mask';
 import { SignupService } from './services/domain/signup.service';
 import { UserService } from './services/domain/user.service';
 import { ProfileService } from './services/domain/profile.service';
+import { ProfileImageComponent } from './pages/profile/profile-image/profile-image.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProfileService } from './services/domain/profile.service';
     ProductComponent,
     SignupComponent,
     ProfileComponent,
+    ProfileImageComponent,
   ],
   imports: [
     BrowserModule,

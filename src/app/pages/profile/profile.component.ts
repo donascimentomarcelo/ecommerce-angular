@@ -10,6 +10,7 @@ import { StateDTO } from '../../models/state.dto';
 import { UserDTO } from '../../models/user.dto';
 import { ProfileService } from '../../services/domain/profile.service';
 import { API_CONFIG } from '../../config/api.config';
+import { ProfileImageComponent } from './profile-image/profile-image.component';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private profileService: ProfileService,
+    private profileImageComponent: ProfileImageComponent
   ) { }
 
   formGroup: FormGroup;
@@ -37,7 +39,6 @@ export class ProfileComponent implements OnInit {
   maskPhone: string = '(000) 00000-0000';
   user: UserDTO;
   email: string;
-  iAmSure: boolean = false;
   id: string = this.activatedRoute.snapshot.paramMap.get('id');
   imageUrl: string;
 
@@ -156,12 +157,6 @@ export class ProfileComponent implements OnInit {
         this.formGroup.controls.email.setErrors({"invalidEmail": true});
       });
   };
-
-  changeCheckbox()
-  {
-    this.iAmSure = !this.iAmSure;
-  };
-
   
   fillInputs(id)
   { 
