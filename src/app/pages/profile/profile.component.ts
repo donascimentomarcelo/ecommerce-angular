@@ -11,6 +11,7 @@ import { UserDTO } from '../../models/user.dto';
 import { ProfileService } from '../../services/domain/profile.service';
 import { API_CONFIG } from '../../config/api.config';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,7 @@ export class ProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private profileService: ProfileService,
-    private profileImageComponent: ProfileImageComponent
+    private ngbModal: NgbModal,
   ) { }
 
   formGroup: FormGroup;
@@ -174,4 +175,9 @@ export class ProfileComponent implements OnInit {
 
       });
   };
+
+  openModal()
+  {
+    this.ngbModal.open(ProfileImageComponent);
+  }
 }

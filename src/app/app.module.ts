@@ -28,6 +28,7 @@ import { SignupService } from './services/domain/signup.service';
 import { UserService } from './services/domain/user.service';
 import { ProfileService } from './services/domain/profile.service';
 import { ProfileImageComponent } from './pages/profile/profile-image/profile-image.component';
+import { NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ProfileImageComponent } from './pages/profile/profile-image/profile-ima
     NgxPaginationModule,
     PipeModule,
     NgxMaskModule.forRoot(),
+    NgbModule.forRoot(),
   ],
   providers: [
     AuthService,
@@ -65,6 +67,8 @@ import { ProfileImageComponent } from './pages/profile/profile-image/profile-ima
     UserService,
     ProfileService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [ProfileImageComponent],
+  entryComponents: [ProfileImageComponent],
 })
 export class AppModule { }
