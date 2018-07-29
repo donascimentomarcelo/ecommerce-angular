@@ -29,6 +29,7 @@ import { UserService } from './services/domain/user.service';
 import { ProfileService } from './services/domain/profile.service';
 import { ProfileImageComponent } from './pages/profile/profile-image/profile-image.component';
 import { NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
     PipeModule,
     NgxMaskModule.forRoot(),
     NgbModule.forRoot(),
+    FileDropModule,
   ],
   providers: [
     AuthService,
@@ -65,7 +67,7 @@ import { NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
     ZipcodeService,
     SignupService,
     UserService,
-    ProfileService
+    ProfileService,
   ],
   bootstrap: [AppComponent],
   exports: [ProfileImageComponent],

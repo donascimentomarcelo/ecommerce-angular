@@ -1,3 +1,30 @@
-<p>
-  profile-image works!
-</p>
+<form>
+    <div class="title-profile-image">
+        <strong>Arraste e solte uma imagem</strong>
+    </div>
+    <div class="body-profile-image">
+      <div class="jumbotron">
+        <file-drop headertext="Arraste e solte uma imagem aqui" (onFileDrop)="dropped($event)" 
+        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+            <!-- <span>Arraste e solte uma imagem</span> -->
+        </file-drop>
+      </div>
+      <div class="upload-table">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                  </tr>
+              </thead>
+              <tbody class="upload-name-style">
+                  <tr *ngFor="let item of files; let i=index">
+                      <td><strong>{{ item.relativePath }}</strong></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm btn-block" (click)="send()" >Enviar</button>
+      </div>
+    </div>
+  </form>
