@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile } from '../../../../../node_modules/ngx-file-drop';
+import { ProfileService } from '../../../services/domain/profile.service';
 
 @Component({
   selector: 'app-profile-image',
@@ -8,11 +9,15 @@ import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile 
 })
 export class ProfileImageComponent implements OnInit {
 
+  constructor(private profileService: ProfileService){}
+
   ngOnInit() {
   }
 
  
   public files: UploadFile[] = [];
+  public image: any;
+  public imageName: string;
  
   public dropped(event: UploadEvent) {
     this.files = event.files;
@@ -22,26 +27,9 @@ export class ProfileImageComponent implements OnInit {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
- 
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
- 
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
- 
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
- 
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
- 
+          
+          this.image = file;
+          this.imageName = droppedFile.relativePath
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
@@ -52,7 +40,13 @@ export class ProfileImageComponent implements OnInit {
   }
 
   send(){
-    console.log(this.files)
+    console.log(this.image)
+    this.profileService.uploadImageProfile(this.image, this.imageName)
+      .subscribe(response => {
+        console.log(response)
+      }, error => {
+        console.log(error)
+      });
   }
  
   public fileOver(event){

@@ -11,8 +11,15 @@ export class ProfileService {
 
 constructor(private http: HttpClient) { }
 
-  update(user: UserDTO, id: string): Observable<UserDTO>
-  {
+  update(user: UserDTO, id: string): Observable<UserDTO> {
     return this.http.put<UserDTO>(`${environment.api_url}/client/${id}`, user);
+  }
+
+  uploadImageProfile(image, imageName): Observable<any> {
+
+    const formData = new FormData()
+    formData.append('file', image, imageName)
+    
+    return this.http.post<any>(`${environment.api_url}/client/sendPhoto`, formData);
   }
 }
