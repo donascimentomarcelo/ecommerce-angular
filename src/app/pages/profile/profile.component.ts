@@ -12,6 +12,7 @@ import { ProfileService } from '../../services/domain/profile.service';
 import { API_CONFIG } from '../../config/api.config';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from '../../../../node_modules/@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,11 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private profileService: ProfileService,
     private ngbModal: NgbModal,
-  ) { }
+    public sanitizer: DomSanitizer
+  ) {
+    this.checkIfImageExistAtBucket(this.id);
+    this.imageUrl = 'assets/images/avatar-blank.png';
+   }
 
   formGroup: FormGroup;
   zipcode: string;
@@ -41,14 +46,14 @@ export class ProfileComponent implements OnInit {
   user: UserDTO;
   email: string;
   id: string = this.activatedRoute.snapshot.paramMap.get('id');
-  imageUrl: string;
+  imageUrl: any;
 
   ngOnInit() 
   {
     this.initForm();
     this.getState();
     this.fillInputs(this.id)
-    this.checkIfEmailExist(this.id)
+    this.checkIfImageExistAtBucket(this.id)
   };
 
   checkIfImageExistAtBucket(id: string)
@@ -56,7 +61,13 @@ export class ProfileComponent implements OnInit {
     this.userService.getImageBucket(id)
       .subscribe(response => {    
         this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
-      }, resp => { });
+        this.blobToDataURL(response).then(dataUrl => {
+          let str: string = dataUrl as string
+          this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
+        })
+      }, error => { 
+        this.imageUrl = 'assets/images/avatar-blank.png';
+      });
   };
 
   initForm()
@@ -178,6 +189,19 @@ export class ProfileComponent implements OnInit {
 
   openModal()
   {
-    this.ngbModal.open(ProfileImageComponent);
+    this.ngbModal.open(ProfileImageComponent).result.then((response) => {
+      this.checkIfImageExistAtBucket(this.id);
+    }, (error) => {
+      this.checkIfImageExistAtBucket(this.id);
+    });
+  }
+
+  blobToDataURL(blob) {
+    return new Promise((fulfill, reject) => {
+      let reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = (e) => fulfill(reader.result);
+      reader.readAsDataURL(blob);
+    });
   }
 }

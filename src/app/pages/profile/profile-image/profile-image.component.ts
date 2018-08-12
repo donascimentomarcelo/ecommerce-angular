@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile } from '../../../../../node_modules/ngx-file-drop';
 import { ProfileService } from '../../../services/domain/profile.service';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile-image',
@@ -9,7 +10,9 @@ import { ProfileService } from '../../../services/domain/profile.service';
 })
 export class ProfileImageComponent implements OnInit {
 
-  constructor(private profileService: ProfileService){}
+  constructor(
+    private profileService: ProfileService,
+    private ngbActiveModal: NgbActiveModal){}
 
   ngOnInit() {
   }
@@ -23,7 +26,6 @@ export class ProfileImageComponent implements OnInit {
     this.files = event.files;
     for (const droppedFile of event.files) {
  
-      // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
@@ -32,7 +34,6 @@ export class ProfileImageComponent implements OnInit {
           this.imageName = droppedFile.relativePath
         });
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
         console.log(droppedFile.relativePath, fileEntry);
       }
@@ -40,15 +41,18 @@ export class ProfileImageComponent implements OnInit {
   }
 
   send(){
-    console.log(this.image)
     this.profileService.uploadImageProfile(this.image, this.imageName)
       .subscribe(response => {
-        console.log(response)
+        this.cancel();
       }, error => {
-        console.log(error)
+        this.cancel();
       });
   }
- 
+
+  cancel(){
+    this.ngbActiveModal.dismiss(ProfileImageComponent);
+  }
+
   public fileOver(event){
     console.log(event);
   }
