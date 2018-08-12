@@ -10,28 +10,26 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProfileImageComponent implements OnInit {
 
+  public files: UploadFile[] = [];
+  public image: any;
+  public imageName: string;
+
   constructor(
     private profileService: ProfileService,
-    private ngbActiveModal: NgbActiveModal){}
+    private ngbActiveModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
 
- 
-  public files: UploadFile[] = [];
-  public image: any;
-  public imageName: string;
- 
   public dropped(event: UploadEvent) {
     this.files = event.files;
     for (const droppedFile of event.files) {
- 
+
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          
           this.image = file;
-          this.imageName = droppedFile.relativePath
+          this.imageName = droppedFile.relativePath;
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -40,7 +38,7 @@ export class ProfileImageComponent implements OnInit {
     }
   }
 
-  send(){
+  public send() {
     this.profileService.uploadImageProfile(this.image, this.imageName)
       .subscribe(response => {
         this.cancel();
@@ -49,15 +47,15 @@ export class ProfileImageComponent implements OnInit {
       });
   }
 
-  cancel(){
+  public cancel() {
     this.ngbActiveModal.dismiss(ProfileImageComponent);
   }
 
-  public fileOver(event){
+  public fileOver(event) {
     console.log(event);
   }
- 
-  public fileLeave(event){
+
+  public fileLeave(event) {
     console.log(event);
   }
 

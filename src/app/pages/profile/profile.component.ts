@@ -42,36 +42,33 @@ export class ProfileComponent implements OnInit {
   zipcode: string;
   states: StateDTO[] = [];
   phone: string;
-  maskPhone: string = '(000) 00000-0000';
+  maskPhone = '(000) 00000-0000';
   user: UserDTO;
   email: string;
   id: string = this.activatedRoute.snapshot.paramMap.get('id');
   imageUrl: any;
 
-  ngOnInit() 
-  {
+  ngOnInit() {
     this.initForm();
     this.getState();
-    this.fillInputs(this.id)
-    this.checkIfImageExistAtBucket(this.id)
-  };
+    this.fillInputs(this.id);
+    this.checkIfImageExistAtBucket(this.id);
+  }
 
-  checkIfImageExistAtBucket(id: string)
-  {
+  checkIfImageExistAtBucket(id: string) {
     this.userService.getImageBucket(id)
-      .subscribe(response => {    
+      .subscribe(response => {
         this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
         this.blobToDataURL(response).then(dataUrl => {
-          let str: string = dataUrl as string
+          const str: string = dataUrl as string;
           this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
-        })
-      }, error => { 
+        });
+      }, error => {
         this.imageUrl = 'assets/images/avatar-blank.png';
       });
-  };
+  }
 
-  initForm()
-  {
+  initForm() {
     this.formGroup = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email, Validators.maxLength(80)]],
       name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
@@ -81,29 +78,24 @@ export class ProfileComponent implements OnInit {
       state: [null, [Validators.required, Validators.minLength(2)]],
       zipcode: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
     });
-  };
-  
-  getZipcode()
-  {
-    if(this.zipcode == null)
-    {
+  }
+
+  getZipcode() {
+    if (this.zipcode == null) {
       return;
-    };
+    }
     this.zipcodeService.getZipcodeAPI(this.zipcode)
       .subscribe(response => {
-        if(response['erro'] !== true)
-        {
-          this.formGroup.controls.address.setValue(response.logradouro +' - '+ response.bairro);
+        if (response['erro'] !== true) {
+          this.formGroup.controls.address.setValue(response.logradouro + ' - ' + response.bairro);
           this.formGroup.controls.city.setValue(response.localidade);
           this.formGroup.controls.state.setValue(response.uf);
           this.formGroup.controls.zipcode.setValue(response.cep);
-        }
-        else
-        {
-          this.toastrService.error('O CEP '+ this.zipcode +' não foi encontrado ', 'CEP inválido', {
+        } else {
+          this.toastrService.error('O CEP ' +  this.zipcode  + ' não foi encontrado ', 'CEP inválido', {
             timeOut: 3000,
           });
-        };
+        }
       }, error => {
         this.formGroup.controls.address.setValue(null);
         this.formGroup.controls.city.setValue(null);
@@ -113,10 +105,9 @@ export class ProfileComponent implements OnInit {
           timeOut: 3000,
         });
       });
-  };
+  }
 
-  update()
-  {
+  update() {
     this.user = {
       name: this.formGroup.value.name,
       password: null,
@@ -130,48 +121,32 @@ export class ProfileComponent implements OnInit {
         zipcode: this.formGroup.value.zipcode ,
       }
     };
-    
+
     this.profileService.update(this.user, this.id)
       .subscribe(response => {
         this.toastrService.success('Seu usuário foi alterado com sucesso !', '', {
           timeOut: 3000,
         });
 
-      }, error => {
-        
-      });
-  };
+      }, error => { });
+  }
 
-  getState()
-  {
+  getState() {
     this.stateService.getStateAPI()
       .subscribe(response => {
         this.states = response;
       }, error => {
 
       });
-  };
+  }
 
-  checkPhone()
-  {
-    if(this.phone.length === 11)
-    {
+  checkPhone() {
+    if (this.phone.length === 11) {
       this.maskPhone = '(000) 0000-0000';
-    };
-  };
+    }
+  }
 
-  checkIfEmailExist(email)
-  {
-    this.signupService.checkIfEmailExist(email)
-      .subscribe(response => {
-      
-      }, error => {
-        this.formGroup.controls.email.setErrors({"invalidEmail": true});
-      });
-  };
-  
-  fillInputs(id)
-  { 
+  fillInputs(id) {
     this.userService.findOne(id)
       .subscribe(response => {
         this.formGroup.controls.name.setValue(response.name);
@@ -185,10 +160,9 @@ export class ProfileComponent implements OnInit {
       }, error => {
 
       });
-  };
+  }
 
-  openModal()
-  {
+  openModal() {
     this.ngbModal.open(ProfileImageComponent).result.then((response) => {
       this.checkIfImageExistAtBucket(this.id);
     }, (error) => {
@@ -198,7 +172,7 @@ export class ProfileComponent implements OnInit {
 
   blobToDataURL(blob) {
     return new Promise((fulfill, reject) => {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onerror = reject;
       reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
