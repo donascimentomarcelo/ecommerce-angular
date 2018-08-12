@@ -1,5 +1,5 @@
 import { UserService } from './../../services/domain/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { FormBuilder, FormGroup, Validators } from '../../../../node_modules/@angular/forms';
 import { ZipcodeService } from '../../services/zipcode.service';
@@ -67,6 +67,7 @@ export class ProfileComponent implements OnInit {
         this.imageUrl = 'assets/images/avatar-blank.png';
       });
   }
+
 
   initForm() {
     this.formGroup = this.formBuilder.group({
