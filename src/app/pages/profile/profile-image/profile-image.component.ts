@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile } from '../../../../../node_modules/ngx-file-drop';
+import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile } from 'ngx-file-drop';
 import { ProfileService } from '../../../services/domain/profile.service';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 

@@ -16,10 +16,19 @@ constructor(private http: HttpClient) { }
   }
 
   uploadImageProfile(image, imageName): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', image, imageName);
 
-    const formData = new FormData()
-    formData.append('file', image, imageName)
-    
     return this.http.post<any>(`${environment.api_url}/client/sendPhoto`, formData);
   }
+
+  blobToDataURL(blob) {
+    return new Promise((fulfill, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = (e) => fulfill(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  }
+
 }

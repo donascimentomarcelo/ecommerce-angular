@@ -1,9 +1,10 @@
-import { UserService } from './../../services/domain/user.service';
+import { AppStateService } from './../../services/appState.service';
+import { UserService } from '../../services/domain/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
-import { FormBuilder, FormGroup, Validators } from '../../../../node_modules/@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ZipcodeService } from '../../services/zipcode.service';
-import { ToastrService } from '../../../../node_modules/ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { StateService } from '../../services/state.service';
 import { SignupService } from '../../services/domain/signup.service';
 import { StateDTO } from '../../models/state.dto';
@@ -12,7 +13,8 @@ import { ProfileService } from '../../services/domain/profile.service';
 import { API_CONFIG } from '../../config/api.config';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DomSanitizer } from '../../../../node_modules/@angular/platform-browser';
+import { AppStateService } from '../../services/AppState.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -32,8 +34,9 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private profileService: ProfileService,
     private ngbModal: NgbModal,
-    public sanitizer: DomSanitizer
-  ) {
+    private sanitizer: DomSanitizer,
+    private appState: AppStateService
+) {
     this.checkIfImageExistAtBucket(this.id);
     this.imageUrl = 'assets/images/avatar-blank.png';
    }
@@ -59,9 +62,10 @@ export class ProfileComponent implements OnInit {
     this.userService.getImageBucket(id)
       .subscribe(response => {
         this.imageUrl = `${API_CONFIG.bucketBaseUrl}client${id}.jpg`;
-        this.blobToDataURL(response).then(dataUrl => {
+        this.profileService.blobToDataURL(response).then(dataUrl => {
           const str: string = dataUrl as string;
           this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
+          this.appState.sendEvent(this.id);
         });
       }, error => {
         this.imageUrl = 'assets/images/avatar-blank.png';
@@ -171,12 +175,4 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  blobToDataURL(blob) {
-    return new Promise((fulfill, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = (e) => fulfill(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  }
 }
